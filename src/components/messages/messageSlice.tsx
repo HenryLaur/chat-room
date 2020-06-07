@@ -1,15 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Message } from "./message/Message";
 
 const initialState: initialState = {
   messages: [],
   user: ["Jake", "David", "Arron", "Paul", "Garolt"][
     Math.floor(Math.random() * Math.floor(5))
   ],
+  webSocket: null,
 };
 
 export interface initialState {
-  messages: string[];
+  messages: Message[];
   user: string;
+  webSocket: WebSocket | null;
 }
 export const messageSlice = createSlice({
   name: "message",
@@ -19,9 +22,12 @@ export const messageSlice = createSlice({
       const message = action.payload;
       state.messages.push(message);
     },
+    connectWebSocket(state, action) {
+      state.webSocket = action.payload;
+    },
   },
 });
 
-export const { addMessage } = messageSlice.actions;
+export const { addMessage, connectWebSocket } = messageSlice.actions;
 
 export default messageSlice.reducer;

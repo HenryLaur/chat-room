@@ -1,15 +1,31 @@
 import React from "react";
 import { Message } from "../message/Message";
+import { makeStyles } from "@material-ui/core";
 
 interface MessageArea {
-  messages: string[];
+  messages: Message[];
 }
 
+const useStyles = makeStyles({
+  root: {
+    height: "90vh",
+    width: "100%",
+    borderWidth: "thin",
+    borderColor: "#673AB7",
+    borderStyle: "dashed",
+    marginBottom: "10px",
+    marginTop: "10px",
+  },
+});
+
 export const MessageArea: React.FC<MessageArea> = ({ messages }) => {
+  const classes = useStyles();
   return (
-    <div>
+    <div className={classes.root}>
       {messages.map((message, key) => {
-        return <div key={key}> {<Message messageBody={message} />} </div>;
+        return (
+          <Message messageBody={message.messageBody} user={message.user} />
+        );
       })}
     </div>
   );
