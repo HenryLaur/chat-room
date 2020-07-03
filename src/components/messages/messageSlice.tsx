@@ -20,7 +20,7 @@ export const messageSlice = createSlice({
   reducers: {
     addMessage(state, action) {
       const message = action.payload;
-      state.messages.push(message);
+      state.messages.unshift(message);
     },
     connectWebSocket(state, action) {
       state.webSocket = action.payload;

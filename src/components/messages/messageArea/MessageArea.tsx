@@ -8,6 +8,10 @@ interface MessageArea {
 
 const useStyles = makeStyles({
   root: {
+    display: "flex",
+    flexDirection: "column-reverse",
+    justifyContent: "flex-start",
+    overflowY: "auto",
     height: "90vh",
     width: "100%",
     borderWidth: "thin",

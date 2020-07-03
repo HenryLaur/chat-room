@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import {
-  getSocket,
-  sendWebsocketMessage,
-} from "../websocket/MessagesWebsocket";
+import { getSocket, sendWebsocketMessage } from "../../../websocket/Websocket";
 import { RootState } from "../../../store/store";
 import { TextField, Grid, Button } from "@material-ui/core";
 
 export const AddMessage = () => {
   const [message, setMessage] = useState("");
   const user = useSelector((state: RootState) => state.message.user);
+  const selectedChannel = useSelector(
+    (state: RootState) => state.channel.selectedChannel
+  );
 
-  const addRandomMessage = (e: React.FormEvent<HTMLFormElement>) => {
+  const sendMessage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const socket = getSocket();
+    const socket = getSocket(selectedChannel?.uuid);
     console.log(message);
     console.log(socket);
     const data = {
@@ -25,7 +25,7 @@ export const AddMessage = () => {
   };
 
   return (
-    <form onSubmit={addRandomMessage}>
+    <form onSubmit={sendMessage}>
       <Grid container>
         <Grid item xs={11}>
           <TextField
@@ -45,7 +45,7 @@ export const AddMessage = () => {
             color="primary"
             type="submit"
           >
-            Primary
+            Send
           </Button>
         </Grid>
       </Grid>
