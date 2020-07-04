@@ -1,12 +1,11 @@
 import React from "react";
-import { Container, Grid, Box } from "@material-ui/core";
+import { Grid, Box } from "@material-ui/core";
 import { MessageArea } from "../components/messages/messageArea/MessageArea";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/store";
 import { AddMessage } from "../components/messages/addMessage/AddMessage";
 import { getSocket } from "../websocket/Websocket";
 import { addMessage } from "../components/messages/MessageSlice";
-import { ChannelSelect } from "../components/channels/ChannelSelect";
 import { LeftSideMenu } from "../components/leftsideMenu/LeftSideMenu";
 
 export const MainPage = () => {

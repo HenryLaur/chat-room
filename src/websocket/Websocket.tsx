@@ -13,7 +13,7 @@ export const getSocket = (channelUuid: string | null | undefined) => {
   if (!channelUuid) {
     return;
   }
-  if (socket && socket.url.split("/").slice(-1)[0] === channelUuid) {
+  if (socket && socketChannelUuid() === channelUuid) {
     return socket;
   } else {
     return connectWebsocket(channelUuid);
@@ -25,5 +25,11 @@ export const sendWebsocketMessage = (message: string) => {
     socket.send(message);
   } else {
     console.log(socket);
+  }
+};
+
+const socketChannelUuid = () => {
+  if (socket) {
+    return socket.url.split("/").slice(-1)[0];
   }
 };
