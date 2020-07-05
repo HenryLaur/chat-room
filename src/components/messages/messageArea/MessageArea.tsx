@@ -1,9 +1,10 @@
 import React from "react";
 import { Message } from "../message/Message";
 import { makeStyles } from "@material-ui/core";
+import { Message as IMessage } from "../MessageSlice";
 
 interface MessageArea {
-  messages: Message[];
+  messages: IMessage[];
 }
 
 const useStyles = makeStyles({

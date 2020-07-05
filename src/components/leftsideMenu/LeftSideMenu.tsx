@@ -1,9 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core";
-import { ChannelSelect } from "../channels/ChannelSelect";
+import { ChannelSelect } from "../channels/channelSelect/ChannelSelect";
 import { RootState } from "../../store/store";
 import { useSelector } from "react-redux";
-import { Channel } from "../channels/Channel";
+import { Channel } from "../channels/channel/Channel";
 
 const useStyles = makeStyles({
   root: {

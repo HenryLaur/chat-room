@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { TextField, Grid, Button } from "@material-ui/core";
 import { v5 as uuidv5 } from "uuid";
-import { Channel } from "./ChannelSlice";
-import { saveChannelServer } from "./ChannelActions";
-import { NAMESPACE } from "../../constants/Constants";
+import { Channel } from "../ChannelSlice";
+import { saveChannelServer } from "../ChannelActions";
+import { NAMESPACE } from "../../../constants/Constants";
 
 export const ChannelSelect = () => {
   const [channelName, setChannelName] = useState("");

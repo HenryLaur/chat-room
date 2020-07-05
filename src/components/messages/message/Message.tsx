@@ -1,54 +1,54 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../store/store";
-import { makeStyles } from "@material-ui/core";
-
+import { Message as IMessage } from "../MessageSlice";
+import {
+  Card,
+  CardMedia,
+  Typography,
+  makeStyles,
+  Grid,
+} from "@material-ui/core";
 const useStyles = makeStyles({
-  OtherUserspeechBubble: {
-    position: "relative",
-    borderRadius: ".4em",
-    display: "inline-block",
-    padding: "5px",
-    margin: "3px",
-    overflowWrap: "anywhere",
-    background: "#03a9f4",
-  },
-  CurrentUserSpeechBubble: {
-    position: "relative",
-    borderRadius: ".4em",
-    display: "inline-block",
-    padding: "5px",
-    margin: "3px",
-    overflowWrap: "anywhere",
-    background: "#2fc15f",
-  },
   currentUserAlign: {
     textAlign: "right",
   },
+  img: {
+    margin: "5px",
+    marginRight: "20px",
+    borderRadius: "50%",
+    width: "45px",
+  },
 });
 
-export interface Message {
-  user: string;
-  messageBody: string;
-}
-
-export const Message: React.FC<Message> = ({ messageBody, user }) => {
+export const Message: React.FC<IMessage> = ({ messageBody, user }) => {
   const classes = useStyles();
-  const currentUser = useSelector((state: RootState) => state.message.user);
 
   return (
-    <div
-      className={currentUser === user ? classes.currentUserAlign : undefined}
-    >
-      <div
-        className={
-          currentUser === user
-            ? classes.CurrentUserSpeechBubble
-            : classes.OtherUserspeechBubble
-        }
-      >
-        {`${user}: ${messageBody}`}
-      </div>
-    </div>
+    <Card>
+      <Grid container>
+        <Grid item>
+          <CardMedia
+            className={classes.img}
+            component="img"
+            alt="Contemplative Reptile"
+            height="45"
+            image="/contemplative-reptile.jpg"
+            title="Contemplative Reptile"
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <Typography
+            gutterBottom
+            variant="body2"
+            color="textSecondary"
+            component="h2"
+          >
+            {user}
+          </Typography>
+          <Typography variant="body2" component="p">
+            {messageBody}
+          </Typography>
+        </Grid>
+      </Grid>
+    </Card>
   );
 };

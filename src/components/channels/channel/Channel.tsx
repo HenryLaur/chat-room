@@ -8,9 +8,11 @@ import {
   makeStyles,
   Grid,
 } from "@material-ui/core";
-import { Channel as ChannelType, setSelectedChannel } from "./ChannelSlice";
-import { RootState } from "../../store/store";
+import { Channel as IChannel, setSelectedChannel } from "../ChannelSlice";
+import { RootState } from "../../../store/store";
 import { useSelector, useDispatch } from "react-redux";
+import { clearMessages } from "../../messages/MessageSlice";
+import { getAllMessagesFromChannel } from "../../messages/MessageActions";
 
 const useStyles = makeStyles({
   root: {
@@ -28,20 +30,26 @@ const useStyles = makeStyles({
   },
 });
 
-export const Channel: React.FC<ChannelType> = ({ uuid, name }) => {
+export const Channel: React.FC<IChannel> = ({ uuid, name }) => {
   const classes = useStyles();
   const selectedChannel = useSelector(
     (state: RootState) => state.channel.selectedChannel
   );
   const dispatch = useDispatch();
 
+  const makeChannelSelected = (channel: IChannel) => {
+    dispatch(clearMessages());
+    getAllMessagesFromChannel(channel);
+  };
+
   const changeChannel = () => {
-    if (uuid === selectedChannel?.uuid) {
+    if (selectedChannel && uuid === selectedChannel?.uuid) {
       return;
     }
-    dispatch(setSelectedChannel({ uuid, name }));
+    const channel: IChannel = { uuid, name };
+    dispatch(setSelectedChannel(channel));
+    makeChannelSelected(channel);
   };
-  console.log(uuid, selectedChannel?.uuid);
   return (
     <Card
       className={
