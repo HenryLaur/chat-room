@@ -12,10 +12,8 @@ import { Channel as IChannel, setSelectedChannel } from "../ChannelSlice";
 import { RootState } from "../../../store/store";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllMessagesFromChannel } from "../../messages/MessageActions";
-import {
-  sendWebsocketMessage,
-  switchSocketConnectionChannel,
-} from "../../../websocket/Websocket";
+import { switchSocketConnectionChannel } from "../../../websocket/Websocket";
+import { getUsersInChannel } from "../../user/UserActions";
 
 const useStyles = makeStyles({
   root: {
@@ -43,6 +41,7 @@ export const Channel: React.FC<IChannel> = ({ uuid, name }) => {
 
   const makeChannelSelected = (channel: IChannel) => {
     getAllMessagesFromChannel(channel);
+    getUsersInChannel(channel);
   };
 
   const changeChannel = () => {

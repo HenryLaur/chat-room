@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Card,
-  CardMedia,
-  Typography,
-  makeStyles,
-  Grid,
-} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import { RootState } from "../../../store/store";
 import { useSelector } from "react-redux";
 const useStyles = makeStyles({
@@ -25,7 +19,7 @@ export const ChannelUsers = () => {
   const channelUsers = useSelector(
     (state: RootState) => state.user.channelUsers
   );
-
+  console.log(channelUsers);
   return (
     <div>
       {channelUsers.map((channelUser) => {
