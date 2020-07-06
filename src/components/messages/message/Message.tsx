@@ -8,7 +8,7 @@ import {
   Grid,
 } from "@material-ui/core";
 const useStyles = makeStyles({
-  currentUserAlign: {
+  userAlign: {
     textAlign: "right",
   },
   img: {
@@ -23,32 +23,34 @@ export const Message: React.FC<IMessage> = ({ messageBody, user }) => {
   const classes = useStyles();
 
   return (
-    <Card>
-      <Grid container>
-        <Grid item>
-          <CardMedia
-            className={classes.img}
-            component="img"
-            alt="Contemplative Reptile"
-            height="45"
-            image="/contemplative-reptile.jpg"
-            title="Contemplative Reptile"
-          />
+    <div>
+      <Card>
+        <Grid container>
+          <Grid item>
+            <CardMedia
+              className={classes.img}
+              component="img"
+              alt="Contemplative Reptile"
+              height="45"
+              image="/contemplative-reptile.jpg"
+              title="Contemplative Reptile"
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <Typography
+              gutterBottom
+              variant="body2"
+              color="textSecondary"
+              component="h2"
+            >
+              {user && user.name}
+            </Typography>
+            <Typography variant="body2" component="p">
+              {messageBody}
+            </Typography>
+          </Grid>
         </Grid>
-        <Grid item xs={4}>
-          <Typography
-            gutterBottom
-            variant="body2"
-            color="textSecondary"
-            component="h2"
-          >
-            {user}
-          </Typography>
-          <Typography variant="body2" component="p">
-            {messageBody}
-          </Typography>
-        </Grid>
-      </Grid>
-    </Card>
+      </Card>
+    </div>
   );
 };

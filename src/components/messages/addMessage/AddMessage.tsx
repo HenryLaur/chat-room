@@ -1,27 +1,35 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { getSocket, sendWebsocketMessage } from "../../../websocket/Websocket";
+import {
+  getSocket,
+  sendWebsocketMessage,
+  WebSocketMessage,
+} from "../../../websocket/Websocket";
 import { RootState } from "../../../store/store";
 import { TextField, Grid, Button } from "@material-ui/core";
 
 export const AddMessage = () => {
   const [message, setMessage] = useState("");
-  const user = useSelector((state: RootState) => state.message.user);
+  const user = useSelector((state: RootState) => state.user.user);
   const selectedChannel = useSelector(
     (state: RootState) => state.channel.selectedChannel
   );
 
   const sendMessage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const socket = getSocket(selectedChannel?.uuid);
-    console.log(message);
-    console.log(socket);
-    const data = {
-      user,
-      messageBody: message,
-    };
-    sendWebsocketMessage(JSON.stringify(data));
+    if (user && selectedChannel) {
+      const socket = getSocket(selectedChannel.uuid);
+      console.log(message);
+      console.log(socket);
+      const data: WebSocketMessage = {
+        type: "MESSAGE",
+        content: {
+          user,
+          messageBody: message,
+        },
+      };
+      sendWebsocketMessage(data);
+    }
   };
 
   return (

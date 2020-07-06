@@ -1,19 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { User } from "../user/UserSlice";
 
 const initialState: initialState = {
   messages: [],
-  user: ["Jake", "David", "Arron", "Paul", "Garolt"][
-    Math.floor(Math.random() * Math.floor(5))
-  ],
 };
 
 export interface initialState {
   messages: Message[];
-  user: string;
 }
 
 export interface Message {
-  user: string;
+  user: User;
   messageBody: string;
 }
 
@@ -27,12 +24,8 @@ export const messageSlice = createSlice({
     clearMessages(state) {
       state.messages = [];
     },
-    addMessageCollection(state, action: PayloadAction<Message[]>) {
-      console.log(action.payload);
-      action.payload.forEach((message) => {
-        state.messages.push(message);
-      });
-      console.log(state.messages.length);
+    setMessageCollection(state, action: PayloadAction<Message[]>) {
+      state.messages = action.payload;
     },
   },
 });
@@ -40,7 +33,7 @@ export const messageSlice = createSlice({
 export const {
   addMessage,
   clearMessages,
-  addMessageCollection,
+  setMessageCollection,
 } = messageSlice.actions;
 
 export default messageSlice.reducer;
