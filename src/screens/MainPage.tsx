@@ -1,47 +1,38 @@
-import React from "react";
-import {
-  Grid,
-  Box,
-  makeStyles,
-  useTheme,
-  useMediaQuery,
-} from "@material-ui/core";
+import React, { useEffect } from "react";
+import { Grid, Box, useTheme, useMediaQuery } from "@material-ui/core";
 import { MessageArea } from "../components/messages/messageArea/MessageArea";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/store";
 import { AddMessage } from "../components/messages/addMessage/AddMessage";
 import { getSocket, WebSocketMessage } from "../websocket/Websocket";
 import { addMessage } from "../components/messages/MessageSlice";
-import { LeftSideMenu } from "../components/leftsideMenu/LeftSideMenu";
-import { ChannelUsers } from "../components/user/channelUsers/ChannelUsers";
+import { LeftSideMenuContent } from "../components/leftsideMenu/LeftSideMenu";
+import { ChannelUserList } from "../components/user/channelUsers/ChannelUsers";
 import {
   addChannelUsers,
   removeChannelUser,
 } from "../components/user/UserSlice";
-
-const useStyles = makeStyles({
-  userAlign: {
-    textAlign: "right",
-  },
-  img: {
-    margin: "5px",
-    marginRight: "20px",
-    borderRadius: "50%",
-    width: "45px",
-  },
-  textArea: {},
-});
+import { NavBar } from "../components/navbar/NavBar";
+import { getUsersInChannels } from "../components/user/UserActions";
 
 export const MainPage = () => {
   const messages = useSelector((state: RootState) => state.message.messages);
   const user = useSelector((state: RootState) => state.user.user);
   const theme = useTheme();
-  const smBreakPoint = useMediaQuery(theme.breakpoints.down("xs"));
-  const classes = useStyles();
+  const smBreakPoint = useMediaQuery(theme.breakpoints.down("sm"));
   const selectChannel = useSelector(
     (state: RootState) => state.channel.selectedChannel
   );
+  const channels = useSelector((state: RootState) => state.channel.channels);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      console.log("UPDATED USERS");
+      getUsersInChannels(channels);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [channels]);
 
   if (selectChannel && user) {
     const socket = getSocket(selectChannel.uuid);
@@ -64,26 +55,25 @@ export const MainPage = () => {
     ) {
       dispatch(removeChannelUser(message.content.user));
     } else if (message.type === "MESSAGE") {
-      dispatch(addMessage(message.content));
+      dispatch(addMessage(message.content.message));
     }
   };
 
   return (
-    <Box pr={2}>
+    <Box>
       <Grid container>
-        <ChannelUsers />
-
-        <Grid item xs={12} sm={3}>
-          <div>
-            {!smBreakPoint && <LeftSideMenu />}
-            {console.log(smBreakPoint)}
-          </div>
+        {smBreakPoint && <NavBar />}
+        <Grid item xs={12} lg={3} md={3}>
+          <div>{!smBreakPoint && <LeftSideMenuContent />}</div>
         </Grid>
-        <Grid item xs={12} sm={9}>
-          <Box className={classes.textArea}>
+        <Grid item xs={12} lg={7} md={6}>
+          <Box>
             <MessageArea messages={messages} />
             <AddMessage />
           </Box>
+        </Grid>
+        <Grid item xs={12} lg={2} md={3}>
+          {!smBreakPoint && <ChannelUserList />}
         </Grid>
       </Grid>
     </Box>

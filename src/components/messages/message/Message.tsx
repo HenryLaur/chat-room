@@ -38,7 +38,7 @@ export const Message: React.FC<IMessage> = ({ messageBody, user }) => {
           </Grid>
           <Grid item xs={4}>
             <Typography gutterBottom variant="body2" color="textSecondary">
-              {user && user.name}
+              {user}
             </Typography>
             <Typography variant="body2">{messageBody}</Typography>
           </Grid>

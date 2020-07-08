@@ -1,15 +1,14 @@
 import React, { useState } from "react";
-import { TextField, Grid, Button } from "@material-ui/core";
+import { TextField, Box } from "@material-ui/core";
 import { v5 as uuidv5 } from "uuid";
 import { Channel } from "../ChannelSlice";
 import { saveChannelServer } from "../ChannelActions";
 import { NAMESPACE } from "../../../constants/Constants";
+import SearchIcon from "@material-ui/icons/Search";
 
 export const ChannelSelect = () => {
   const [channelName, setChannelName] = useState("");
-  const saveChannel = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const saveChannel = () => {
     const channel: Channel = {
       uuid: uuidv5(channelName, NAMESPACE),
       name: channelName,
@@ -18,30 +17,22 @@ export const ChannelSelect = () => {
   };
 
   return (
-    <form onSubmit={saveChannel}>
-      <Grid container>
-        <Grid item xs={8}>
-          <TextField
-            size="small"
-            id="outlined-basic"
-            label="Outlined"
-            variant="outlined"
-            fullWidth
-            onChange={(event) => setChannelName(event.target.value)}
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <Button
-            variant="outlined"
-            fullWidth
-            size="medium"
-            color="primary"
-            type="submit"
-          >
-            Send
-          </Button>
-        </Grid>
-      </Grid>
-    </form>
+    <Box ml={3} mr={3}>
+      <TextField
+        size="small"
+        id="outlined-basic"
+        label="Channel Name"
+        variant="outlined"
+        fullWidth
+        onChange={(event) => setChannelName(event.target.value)}
+        InputProps={{
+          endAdornment: (
+            <div onClick={() => saveChannel()}>
+              <SearchIcon />
+            </div>
+          ),
+        }}
+      />
+    </Box>
   );
 };

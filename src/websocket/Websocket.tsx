@@ -1,4 +1,3 @@
-import { User } from "../components/user/UserSlice";
 import { Message } from "../components/messages/MessageSlice";
 import { Channel } from "../components/channels/ChannelSlice";
 
@@ -12,10 +11,14 @@ export interface WebSocketChannelType {
 }
 export interface WebSocketMessageType {
   type: "MESSAGE";
-  content: Message;
+  content: NestedMessage;
+}
+
+export interface NestedMessage {
+  message: Message;
 }
 export interface ChannelAction {
-  user: User;
+  user: string;
   channel: Channel | null;
 }
 export const connectWebsocket = (channelUuid: string) => {
@@ -41,7 +44,7 @@ export const getSocket = (channelUuid: string | null | undefined) => {
 };
 
 export const switchSocketConnectionChannel = (
-  user: User,
+  user: string,
   currentChannel: Channel,
   nextChannel: Channel
 ) => {

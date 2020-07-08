@@ -6,7 +6,8 @@ import {
   WebSocketMessage,
 } from "../../../websocket/Websocket";
 import { RootState } from "../../../store/store";
-import { TextField, Grid, Button } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
+import SendIcon from "@material-ui/icons/Send";
 
 export const AddMessage = () => {
   const [message, setMessage] = useState("");
@@ -15,8 +16,7 @@ export const AddMessage = () => {
     (state: RootState) => state.channel.selectedChannel
   );
 
-  const sendMessage = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const sendMessage = () => {
     if (user && selectedChannel) {
       const socket = getSocket(selectedChannel.uuid);
       console.log(message);
@@ -24,8 +24,7 @@ export const AddMessage = () => {
       const data: WebSocketMessage = {
         type: "MESSAGE",
         content: {
-          user,
-          messageBody: message,
+          message: { user, messageBody: message },
         },
       };
       sendWebsocketMessage(data);
@@ -33,30 +32,20 @@ export const AddMessage = () => {
   };
 
   return (
-    <form onSubmit={sendMessage}>
-      <Grid container>
-        <Grid item xs={11}>
-          <TextField
-            size="small"
-            id="outlined-basic"
-            label="Outlined"
-            variant="outlined"
-            fullWidth
-            onChange={(event) => setMessage(event.target.value)}
-          />
-        </Grid>
-        <Grid item xs={1}>
-          <Button
-            variant="outlined"
-            fullWidth
-            size="medium"
-            color="primary"
-            type="submit"
-          >
-            Send
-          </Button>
-        </Grid>
-      </Grid>
-    </form>
+    <TextField
+      size="small"
+      id="outlined-basic"
+      label="Message"
+      variant="outlined"
+      fullWidth
+      onChange={(event) => setMessage(event.target.value)}
+      InputProps={{
+        endAdornment: (
+          <div onClick={() => sendMessage()}>
+            <SendIcon />
+          </div>
+        ),
+      }}
+    />
   );
 };

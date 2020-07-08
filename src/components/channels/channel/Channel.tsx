@@ -8,7 +8,7 @@ import {
   makeStyles,
   Grid,
 } from "@material-ui/core";
-import { Channel as IChannel, setSelectedChannel } from "../ChannelSlice";
+import { setSelectedChannel } from "../ChannelSlice";
 import { RootState } from "../../../store/store";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllMessagesFromChannel } from "../../messages/MessageActions";
@@ -26,12 +26,19 @@ const useStyles = makeStyles({
     backgroundColor: "#70ff6e",
   },
   channelInfo: {
-    marginLeft: "8px",
-    marginTop: "4px",
+    paddingLeft: "8px",
+    paddingTop: "4px",
+  },
+  join: {
+    justifyContent: "center",
   },
 });
-
-export const Channel: React.FC<IChannel> = ({ uuid, name }) => {
+interface IChannel {
+  uuid: string;
+  name: string;
+  users?: number;
+}
+export const Channel: React.FC<IChannel> = ({ uuid, name, users }) => {
   const classes = useStyles();
   const selectedChannel = useSelector(
     (state: RootState) => state.channel.selectedChannel
@@ -56,6 +63,7 @@ export const Channel: React.FC<IChannel> = ({ uuid, name }) => {
     dispatch(setSelectedChannel(channel));
     makeChannelSelected(channel);
   };
+
   return (
     <Card
       className={
@@ -63,7 +71,7 @@ export const Channel: React.FC<IChannel> = ({ uuid, name }) => {
       }
     >
       <Grid container>
-        <Grid item xs={4}>
+        <Grid item xs={6} md={4}>
           <CardMedia
             component="img"
             alt="Contemplative Reptile"
@@ -72,19 +80,21 @@ export const Channel: React.FC<IChannel> = ({ uuid, name }) => {
             title="Contemplative Reptile"
           />
         </Grid>
-        <Grid item xs={4} className={classes.channelInfo}>
+        <Grid item xs={6} md={4} className={classes.channelInfo}>
           <Typography gutterBottom variant="body1" component="h2">
             {name}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            Online: 68
+            Online: {users}
           </Typography>
         </Grid>
-        <CardActions>
-          <Button size="large" color="primary" onClick={changeChannel}>
-            Join
-          </Button>
-        </CardActions>
+        <Grid item xs={12} md={4}>
+          <CardActions className={classes.join}>
+            <Button size="large" color="primary" onClick={changeChannel}>
+              Join
+            </Button>
+          </CardActions>
+        </Grid>
       </Grid>
     </Card>
   );

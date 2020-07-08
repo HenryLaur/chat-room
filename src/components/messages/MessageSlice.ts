@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User } from "../user/UserSlice";
 
 const initialState: initialState = {
   messages: [],
@@ -10,7 +9,7 @@ export interface initialState {
 }
 
 export interface Message {
-  user: User;
+  user: string;
   messageBody: string;
 }
 
@@ -25,7 +24,12 @@ export const messageSlice = createSlice({
       state.messages = [];
     },
     setMessageCollection(state, action: PayloadAction<Message[]>) {
-      state.messages = action.payload;
+      state.messages = [];
+      action.payload.forEach((message) => {
+        if (message.messageBody !== null && message.user !== null) {
+          state.messages.push(message);
+        }
+      });
     },
   },
 });

@@ -5,7 +5,8 @@ export const saveChannelServer = (channel: Channel) => {
   server
     .post("/channel/create", channel)
     .then((response) => {
-      store.dispatch(addChannel(channel));
+      console.log(response.data);
+      store.dispatch(addChannel({ channel, users: response.data.length }));
     })
     .catch((error) => {
       console.log(error);

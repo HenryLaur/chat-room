@@ -6,30 +6,26 @@ const initialState: initialState = {
 };
 
 export interface initialState {
-  user: User | null;
-  channelUsers: User[];
-}
-
-export interface User {
-  name: string;
+  user: string | null;
+  channelUsers: string[];
 }
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setUser(state, action: PayloadAction<User>) {
+    setUser(state, action: PayloadAction<string>) {
       state.user = action.payload;
     },
-    setChannelUsers(state, action: PayloadAction<User[]>) {
+    setChannelUsers(state, action: PayloadAction<string[]>) {
       state.channelUsers = action.payload;
     },
-    addChannelUsers(state, action: PayloadAction<User>) {
+    addChannelUsers(state, action: PayloadAction<string>) {
       state.channelUsers.push(action.payload);
     },
-    removeChannelUser(state, action: PayloadAction<User>) {
+    removeChannelUser(state, action: PayloadAction<string>) {
       const userIndexToRemove = state.channelUsers.findIndex(
-        (channelUser) => channelUser.name === action.payload.name
+        (channelUser) => channelUser === action.payload
       );
       if (userIndexToRemove !== -1) {
         state.channelUsers.splice(userIndexToRemove, 1);
