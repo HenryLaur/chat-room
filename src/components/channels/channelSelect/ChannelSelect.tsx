@@ -34,8 +34,12 @@ export const ChannelSelect = () => {
         variant="outlined"
         fullWidth
         value={channelName}
-        onChange={(event) => {
-          setChannelName(event.target.value);
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && !e.shiftKey) {
+            saveChannel();
+          } else {
+            setChannelName(channelName + e.key);
+          }
         }}
         InputProps={{
           endAdornment: (

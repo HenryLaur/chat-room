@@ -7,8 +7,12 @@ interface MessageArea {
   messages: IMessage[];
 }
 
+interface height {
+  height: string;
+}
+
 const useStyles = makeStyles({
-  root: {
+  root: (props: height) => ({
     display: "flex",
     flexDirection: "column-reverse",
     justifyContent: "flex-start",
@@ -16,7 +20,8 @@ const useStyles = makeStyles({
     width: "100%",
     marginBottom: "10px",
     marginTop: "10px",
-  },
+    height: props.height,
+  }),
   height: {
     height: "90vh",
   },
@@ -26,23 +31,21 @@ const useStyles = makeStyles({
 });
 
 export const MessageArea: React.FC<MessageArea> = ({ messages }) => {
-  const classes = useStyles();
   const theme = useTheme();
   const smBreakPoint = useMediaQuery(theme.breakpoints.down("sm"));
+  const classes = useStyles({ height: smBreakPoint ? "80vh" : "90vh" });
 
   return (
-    <div className={smBreakPoint ? classes.smallerHeight : classes.height}>
-      <div className={classes.root}>
-        {messages.map((message, key) => {
-          return (
-            <Message
-              dateTime={new Date(message.dateTime)}
-              messageBody={message.messageBody}
-              user={message.user}
-            />
-          );
-        })}
-      </div>
+    <div className={classes.root}>
+      {messages.map((message, key) => {
+        return (
+          <Message
+            dateTime={new Date(message.dateTime)}
+            messageBody={message.messageBody}
+            user={message.user}
+          />
+        );
+      })}
     </div>
   );
 };

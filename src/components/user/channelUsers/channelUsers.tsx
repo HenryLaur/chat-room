@@ -21,7 +21,7 @@ const useStyles = makeStyles({
   },
   img: {
     margin: "5px",
-    marginRight: "20px",
+    marginRight: "5px",
     borderRadius: "50%",
     width: "45px",
   },

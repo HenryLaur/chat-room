@@ -46,11 +46,12 @@ export const AddMessage = () => {
       multiline
       rows={1}
       rowsMax={4}
-      onChange={(event) => setMessage(event.target.value)}
       value={message}
       onKeyDown={(e) => {
         if (e.key === "Enter" && !e.shiftKey) {
           sendMessage();
+        } else {
+          setMessage(message + e.key);
         }
       }}
       InputProps={{

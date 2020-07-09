@@ -24,6 +24,9 @@ const useStyles = makeStyles({
   messageBody: {
     whiteSpace: "pre-wrap",
   },
+  imgGrid: {
+    flexBasis: "auto",
+  },
 });
 
 export const Message: React.FC<IMessage> = ({
@@ -36,7 +39,7 @@ export const Message: React.FC<IMessage> = ({
     <div>
       <Card>
         <Grid container>
-          <Grid item>
+          <Grid item xs={2} className={classes.imgGrid}>
             <CardMedia
               className={classes.img}
               component="img"
