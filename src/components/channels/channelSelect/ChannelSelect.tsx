@@ -22,16 +22,18 @@ export const ChannelSelect = () => {
       name: channelName,
     };
     saveChannelServer(channel);
+    setChannelName("");
   };
 
   return (
     <Box ml={3} mr={3}>
       <TextField
         size="small"
-        id="outlined-basic"
+        id="ChannelSearch"
         label="Channel Name"
         variant="outlined"
         fullWidth
+        value={channelName}
         onChange={(event) => {
           setChannelName(event.target.value);
         }}

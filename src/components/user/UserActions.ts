@@ -10,7 +10,6 @@ export const getUsersInChannel = (channel: Channel) => {
   server
     .get(`/user/${channel.uuid}`)
     .then((response) => {
-      console.log(response.data);
       store.dispatch(setChannelUsers(response.data));
     })
     .catch((error) => {

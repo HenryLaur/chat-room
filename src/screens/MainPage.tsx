@@ -56,7 +56,6 @@ export const MainPage = () => {
     }
   }
   const socketMessageHandling = (message: WebSocketMessage) => {
-    console.log(message);
     if (
       message.type === "JOIN" &&
       message.content.channel?.uuid === selectChannel?.uuid
@@ -68,7 +67,6 @@ export const MainPage = () => {
     ) {
       dispatch(removeChannelUser(message.content.user));
     } else if (message.type === "MESSAGE") {
-      console.log(message.content.message);
       dispatch(addMessage(message.content.message));
     }
   };
@@ -77,11 +75,11 @@ export const MainPage = () => {
     <Box>
       <Grid container>
         {smBreakPoint && <NavBar />}
-        <Grid item xs={12} lg={3} md={3}>
+        <Grid item xs={12} lg={2} md={3}>
           <div>{!smBreakPoint && <LeftSideMenuContent />}</div>
         </Grid>
-        <Grid item xs={12} lg={7} md={6}>
-          <Box pr={1} pl={1} className={classes.border}>
+        <Grid item xs={12} lg={8} md={6}>
+          <Box pr={1} pl={1} className={!smBreakPoint ? classes.border : ""}>
             <MessageArea messages={messages} />
             <AddMessage />
           </Box>

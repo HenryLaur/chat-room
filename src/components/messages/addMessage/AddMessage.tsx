@@ -25,9 +25,6 @@ export const AddMessage = () => {
 
   const sendMessage = () => {
     if (user && selectedChannel) {
-      const socket = getSocket(selectedChannel.uuid);
-      console.log(message);
-      console.log(socket);
       const data: WebSocketMessage = {
         type: "MESSAGE",
         content: {

@@ -93,14 +93,12 @@ export const ChannelUsers = () => {
   const channelUsers = useSelector(
     (state: RootState) => state.user.channelUsers
   );
-  console.log(channelUsers);
   return (
     <div>
       <Drawer
         anchor="right"
         open={drawerOpen}
         onClose={() => {
-          console.log(drawerOpen);
           setDrawerOpen(false);
         }}
       >

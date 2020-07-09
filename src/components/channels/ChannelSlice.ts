@@ -30,7 +30,13 @@ export const channelSlice = createSlice({
       state.selectedChannel = null;
     },
     addChannel(state, action: PayloadAction<ChannelAndUsers>) {
-      state.channels.push(action.payload);
+      const findIndex = state.channels.findIndex(
+        (channel) => channel.channel.uuid === action.payload.channel.uuid
+      );
+
+      if (findIndex === -1) {
+        state.channels.push(action.payload);
+      }
     },
     updateUsersInChannel(state, action) {
       state.channels.forEach((channel) => {

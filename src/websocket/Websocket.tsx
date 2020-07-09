@@ -49,32 +49,32 @@ export const switchSocketConnectionChannel = (
   nextChannel: Channel
 ) => {
   if (socket) {
-    sendWebsocketMessage({
-      type: "LEAVE",
-      content: {
-        user,
-        channel: currentChannel,
-      },
-    });
+    sendChannelTypeMessage("LEAVE", user, currentChannel);
     socket.close();
   }
   socket = new WebSocket(
     `ws://${document.location.hostname}:8080/ws/${nextChannel.uuid}`
   );
-  console.trace();
   const interval = setInterval(() => {
     if (socket && socket.readyState === socket.OPEN) {
-      console.log("SENDING JOIN");
-      sendWebsocketMessage({
-        type: "JOIN",
-        content: {
-          user,
-          channel: nextChannel,
-        },
-      });
+      sendChannelTypeMessage("JOIN", user, nextChannel);
       clearInterval(interval);
     }
   }, 10);
+};
+
+const sendChannelTypeMessage = (
+  type: "LEAVE" | "JOIN",
+  user: string,
+  currentChannel: Channel
+) => {
+  sendWebsocketMessage({
+    type,
+    content: {
+      user,
+      channel: currentChannel,
+    },
+  });
 };
 
 export const sendWebsocketMessage = (message: WebSocketMessage) => {

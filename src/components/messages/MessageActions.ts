@@ -6,7 +6,6 @@ export const getAllMessagesFromChannel = (channel: Channel) => {
   server
     .get(`/messages/${channel.uuid}`)
     .then((response) => {
-      console.log(response.data);
       store.dispatch(setMessageCollection(response.data));
     })
     .catch((error) => {

@@ -27,15 +27,21 @@ const useStyles = makeStyles({
     width: "250px",
     maxWidth: "250px",
   },
+  channels: {
+    maxHeight: "80vh",
+    overflowY: "auto",
+  },
 });
 
 export const LeftSideMenuContent = () => {
   const channels = useSelector((state: RootState) => state.channel.channels);
+  const classes = useStyles();
+
   return (
     <List>
       <User />
       <ChannelSelect />
-      <Box pt={2}>
+      <Box pt={2} className={classes.channels}>
         <Divider />
         {channels.map((channel, key) => {
           return (
@@ -56,17 +62,12 @@ export const LeftSideMenuContent = () => {
 export const LeftSideMenu = () => {
   const classes = useStyles();
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const channelUsers = useSelector(
-    (state: RootState) => state.user.channelUsers
-  );
-  console.log(channelUsers);
   return (
     <div>
       <Drawer
         anchor="left"
         open={drawerOpen}
         onClose={() => {
-          console.log(drawerOpen);
           setDrawerOpen(false);
         }}
       >
