@@ -1,5 +1,11 @@
 import React, { useEffect } from "react";
-import { Grid, Box, useTheme, useMediaQuery } from "@material-ui/core";
+import {
+  Grid,
+  Box,
+  useTheme,
+  useMediaQuery,
+  makeStyles,
+} from "@material-ui/core";
 import { MessageArea } from "../components/messages/messageArea/MessageArea";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/store";
@@ -15,6 +21,13 @@ import {
 import { NavBar } from "../components/navbar/NavBar";
 import { getUsersInChannels } from "../components/user/UserActions";
 
+const useStyles = makeStyles({
+  border: {
+    borderLeft: "#a5a5a5 solid 1px",
+    borderRight: "#a5a5a5 solid 1px",
+  },
+});
+
 export const MainPage = () => {
   const messages = useSelector((state: RootState) => state.message.messages);
   const user = useSelector((state: RootState) => state.user.user);
@@ -25,10 +38,10 @@ export const MainPage = () => {
   );
   const channels = useSelector((state: RootState) => state.channel.channels);
   const dispatch = useDispatch();
+  const classes = useStyles();
 
   useEffect(() => {
     const interval = setInterval(() => {
-      console.log("UPDATED USERS");
       getUsersInChannels(channels);
     }, 3000);
     return () => clearInterval(interval);
@@ -55,6 +68,7 @@ export const MainPage = () => {
     ) {
       dispatch(removeChannelUser(message.content.user));
     } else if (message.type === "MESSAGE") {
+      console.log(message.content.message);
       dispatch(addMessage(message.content.message));
     }
   };
@@ -67,7 +81,7 @@ export const MainPage = () => {
           <div>{!smBreakPoint && <LeftSideMenuContent />}</div>
         </Grid>
         <Grid item xs={12} lg={7} md={6}>
-          <Box>
+          <Box pr={1} pl={1} className={classes.border}>
             <MessageArea messages={messages} />
             <AddMessage />
           </Box>

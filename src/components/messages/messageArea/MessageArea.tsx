@@ -26,7 +26,11 @@ export const MessageArea: React.FC<MessageArea> = ({ messages }) => {
     <div className={classes.root}>
       {messages.map((message, key) => {
         return (
-          <Message messageBody={message.messageBody} user={message.user} />
+          <Message
+            dateTime={new Date(message.dateTime)}
+            messageBody={message.messageBody}
+            user={message.user}
+          />
         );
       })}
     </div>

@@ -4,12 +4,33 @@ import { RootState } from "../../store/store";
 import { useSelector } from "react-redux";
 import { Channel } from "../channels/channel/Channel";
 import { User } from "../user/user/User";
-import { Drawer, Divider, List, ListItem, Box } from "@material-ui/core";
+import {
+  Drawer,
+  Divider,
+  List,
+  ListItem,
+  Box,
+  makeStyles,
+} from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
+
+const useStyles = makeStyles({
+  root: {
+    margin: "10px",
+    overflow: "auto",
+    maxHeight: "100%",
+  },
+  user: {
+    marginBottom: "30px",
+  },
+  drawer: {
+    width: "250px",
+    maxWidth: "250px",
+  },
+});
 
 export const LeftSideMenuContent = () => {
   const channels = useSelector((state: RootState) => state.channel.channels);
-
   return (
     <List>
       <User />

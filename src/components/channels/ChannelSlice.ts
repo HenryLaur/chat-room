@@ -34,7 +34,6 @@ export const channelSlice = createSlice({
     },
     updateUsersInChannel(state, action) {
       state.channels.forEach((channel) => {
-        console.log(action.payload[channel.channel.uuid]);
         if (action.payload[channel.channel.uuid]) {
           channel.users = action.payload[channel.channel.uuid].length;
         }

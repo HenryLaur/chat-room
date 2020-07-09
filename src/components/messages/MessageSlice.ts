@@ -11,6 +11,7 @@ export interface initialState {
 export interface Message {
   user: string;
   messageBody: string;
+  dateTime: Date;
 }
 
 export const messageSlice = createSlice({

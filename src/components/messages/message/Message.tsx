@@ -6,6 +6,7 @@ import {
   Typography,
   makeStyles,
   Grid,
+  Box,
 } from "@material-ui/core";
 const useStyles = makeStyles({
   userAlign: {
@@ -17,11 +18,20 @@ const useStyles = makeStyles({
     borderRadius: "50%",
     width: "45px",
   },
+  title: {
+    display: "inline-block",
+  },
+  messageBody: {
+    whiteSpace: "pre-wrap",
+  },
 });
 
-export const Message: React.FC<IMessage> = ({ messageBody, user }) => {
+export const Message: React.FC<IMessage> = ({
+  messageBody,
+  user,
+  dateTime,
+}) => {
   const classes = useStyles();
-
   return (
     <div>
       <Card>
@@ -36,11 +46,29 @@ export const Message: React.FC<IMessage> = ({ messageBody, user }) => {
               title="Contemplative Reptile"
             />
           </Grid>
-          <Grid item xs={4}>
-            <Typography gutterBottom variant="body2" color="textSecondary">
-              {user}
+          <Grid item xs={10}>
+            <Grid item xs={1} className={classes.title}>
+              <Typography gutterBottom variant="body2" color="textSecondary">
+                {user}
+              </Typography>
+            </Grid>
+            <Grid item xs={1} className={classes.title}>
+              <Box ml={1}>
+                <Typography gutterBottom variant="body2" color="textSecondary">
+                  {`${dateTime.getDate()}/${
+                    dateTime.getMonth() + 1
+                  }/${dateTime.getFullYear()}`}
+                </Typography>
+              </Box>
+            </Grid>
+
+            <Typography
+              variant="body2"
+              className={classes.messageBody}
+              component="pre"
+            >
+              {messageBody}
             </Typography>
-            <Typography variant="body2">{messageBody}</Typography>
           </Grid>
         </Grid>
       </Card>

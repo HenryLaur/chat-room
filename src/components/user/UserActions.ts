@@ -19,15 +19,12 @@ export const getUsersInChannel = (channel: Channel) => {
 };
 export const getUsersInChannels = (channels: ChannelAndUsers[]) => {
   const channelUuids: string[] = [];
-  console.log(channels);
   channels.forEach((channel) => {
     channelUuids.push(channel.channel.uuid);
   });
-  console.log(channelUuids);
   server
     .post(`/user/channels`, channelUuids)
     .then((response) => {
-      console.log(response.data);
       store.dispatch(updateUsersInChannel(response.data));
     })
     .catch((error) => {
