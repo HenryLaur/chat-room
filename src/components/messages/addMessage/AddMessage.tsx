@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   getSocket,
   sendWebsocketMessage,
@@ -8,6 +8,8 @@ import {
 import { RootState } from "../../../store/store";
 import { TextField, makeStyles } from "@material-ui/core";
 import SendIcon from "@material-ui/icons/Send";
+import { setNeedSetUserNameError } from "../../user/UserSlice";
+import { setNeedActiveChannelError } from "../../channels/ChannelSlice";
 
 const useStyles = makeStyles({
   pointer: {
@@ -21,7 +23,17 @@ export const AddMessage = () => {
   const selectedChannel = useSelector(
     (state: RootState) => state.channel.selectedChannel
   );
+  const dispatch = useDispatch();
   const classes = useStyles();
+
+  const handleError = () => {
+    if (!user) {
+      dispatch(setNeedSetUserNameError());
+    }
+    if (!selectedChannel) {
+      dispatch(setNeedActiveChannelError());
+    }
+  };
 
   const sendMessage = () => {
     if (user && selectedChannel) {
@@ -33,6 +45,8 @@ export const AddMessage = () => {
       };
       sendWebsocketMessage(data);
       setMessage("");
+    } else {
+      handleError();
     }
   };
 
@@ -47,11 +61,10 @@ export const AddMessage = () => {
       rows={1}
       rowsMax={4}
       value={message}
-      onKeyDown={(e) => {
+      onChange={(e) => setMessage(e.target.value)}
+      onKeyUp={(e) => {
         if (e.key === "Enter" && !e.shiftKey) {
           sendMessage();
-        } else {
-          setMessage(message + e.key);
         }
       }}
       InputProps={{

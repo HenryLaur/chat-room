@@ -1,13 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: initialState = {
-  user: null,
+  user: "",
   channelUsers: [],
+  error: false,
 };
 
 export interface initialState {
   user: string | null;
   channelUsers: string[];
+  error: boolean;
 }
 
 export const userSlice = createSlice({
@@ -31,6 +33,12 @@ export const userSlice = createSlice({
         state.channelUsers.splice(userIndexToRemove, 1);
       }
     },
+    setNeedSetUserNameError(state) {
+      state.error = true;
+    },
+    clearNeedSetUserNameError(state) {
+      state.error = false;
+    },
   },
 });
 
@@ -39,6 +47,8 @@ export const {
   setChannelUsers,
   addChannelUsers,
   removeChannelUser,
+  setNeedSetUserNameError,
+  clearNeedSetUserNameError,
 } = userSlice.actions;
 
 export default userSlice.reducer;

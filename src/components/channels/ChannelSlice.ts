@@ -3,11 +3,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 const initialState: initialState = {
   selectedChannel: null,
   channels: [],
+  error: false,
 };
 
 export interface initialState {
   selectedChannel: Channel | null;
   channels: ChannelAndUsers[];
+  error: boolean;
 }
 
 export interface ChannelAndUsers {
@@ -45,6 +47,12 @@ export const channelSlice = createSlice({
         }
       });
     },
+    setNeedActiveChannelError(state) {
+      state.error = true;
+    },
+    clearNeedActiveChannelError(state) {
+      state.error = false;
+    },
   },
 });
 
@@ -53,6 +61,8 @@ export const {
   unselectChannel,
   addChannel,
   updateUsersInChannel,
+  setNeedActiveChannelError,
+  clearNeedActiveChannelError,
 } = channelSlice.actions;
 
 export default channelSlice.reducer;
