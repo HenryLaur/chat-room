@@ -20,6 +20,7 @@ import {
 } from "../components/user/UserSlice";
 import { NavBar } from "../components/navbar/NavBar";
 import { getUsersInChannels } from "../components/user/UserActions";
+import { Git } from "../components/git/Git";
 
 const useStyles = makeStyles({
   border: {
@@ -86,6 +87,7 @@ export const MainPage = () => {
         </Grid>
         <Grid item xs={12} lg={2} md={3}>
           {!smBreakPoint && <ChannelUserList />}
+          {!smBreakPoint && <Git />}
         </Grid>
       </Grid>
     </Box>
