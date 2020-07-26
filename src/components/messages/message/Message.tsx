@@ -23,6 +23,7 @@ const useStyles = makeStyles({
   },
   messageBody: {
     whiteSpace: "pre-wrap",
+    wordBreak: "break-word"
   },
   imgGrid: {
     flexBasis: "auto",

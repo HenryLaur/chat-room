@@ -7,7 +7,7 @@ import * as serviceWorker from "./serviceWorker";
 import { MainPage } from "./screens/MainPage";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { yellow } from "@material-ui/core/colors/";
-
+console.log = function () {};
 const theme = createMuiTheme({
   palette: {
     primary: {
